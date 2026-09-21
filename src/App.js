@@ -25,9 +25,13 @@ function App() {
   // Add task
   ///////////////////////////
   const addTask = () => {
-    if (newTask) {
-      let num = toDo.length + 1;
-      let newEntry = { id: num, title: newTask, status: false };
+    if (newTask.trim()) {
+      const newEntry = {
+        id: Date.now(),
+        title: newTask.trim(),
+        status: false,
+      };
+
       setToDo([...toDo, newEntry]);
       setNewTask("");
     }
@@ -72,9 +76,11 @@ function App() {
   // Update task
   ///////////////////////////
   const updateTask = () => {
-    let filterRecords = [...toDo].filter((task) => task.id !== updateData.id);
-    let updatedObject = [...filterRecords, updateData];
-    setToDo(updatedObject);
+    const updatedTasks = toDo.map((task) =>
+      task.id === updateData.id ? updateData : task,
+    );
+
+    setToDo(updatedTasks);
     setUpdateData("");
   };
 
